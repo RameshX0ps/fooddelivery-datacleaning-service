@@ -1,7 +1,25 @@
 [project]
-name = "fooddelivery-datacleaning-service"
+name = "src"
 version = "0.1.0"
-description = "Add your description here"
+description = "Food Delivery Data Cleaning Service"
 readme = "README.md"
-requires-python = ">=3.13"
-dependencies = []
+requires-python = ">=3.11"
+authors = [
+    { name = "Ramesh Vhanamane", email = "your_email@example.com" }
+]
+dependencies = [
+    "pandas",
+    "pandera",
+    "sqlalchemy",
+    "psycopg2-binary",
+    "pydantic-settings",
+    "loguru"
+]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest",
+    "pytest-cov",
+    "ruff",        # linter
+    "mypy"         # type checker
+]
