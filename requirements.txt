@@ -1,0 +1,6 @@
+pandas
+numpy
+SQLAlchemy
+loguru
+psycopg-binary
+-e .
