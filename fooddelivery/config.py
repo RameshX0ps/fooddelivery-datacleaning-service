@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings
 from pydantic import Field
+from typing import List
 
 class Settings(BaseSettings):
     SWIGGY_POSTGRES_DB_PORT: int = Field(5432, env="SWIGGY_POSTGRES_DB_PORT")
@@ -11,11 +12,24 @@ class Settings(BaseSettings):
     RAW_DB_TABLE_NAME: str = "raw_food_delivery_data"
     CLEANED_DB_TABLE_NAME: str = "cleaned_delivery_data"
 
-    LOCATION_COLS: list[str] = [
+    LOCATION_COLS: List[str] = [
         "restaurant_latitude",
         "restaurant_longitude",
         "delivery_latitude",
         "delivery_longitude",
+    ]
+    DROP_COLUMNS:List[str] =  [
+        'rider_id',
+        'restaurant_latitude',
+        'restaurant_longitude',
+        'delivery_latitude',
+        'delivery_longitude',
+        'order_date',
+        "order_time_hour",
+        "order_day",
+        "city_name",
+        "order_day_of_week",
+        "order_month"
     ]
 
     class Config:

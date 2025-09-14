@@ -1,8 +1,9 @@
 import numpy as np
 import pandas as pd
 from loguru import logger
-from config import settings
-from schemas import raw_schema, cleaned_schema
+
+from fooddelivery.config import settings
+from fooddelivery.schemas import raw_schema, cleaned_schema
 
 def _normalize_columns(df: pd.DataFrame) -> pd.DataFrame:
     """Normalize dataframe column names to snake_case lowercase."""
@@ -13,7 +14,6 @@ def clean_location(df: pd.DataFrame, threshold: float = 1.0) -> pd.DataFrame:
         if col in df.columns:
             df[col] = df[col].mask(df[col] < threshold, np.nan)
     return df
-
 
 def data_cleaning(df: pd.DataFrame) -> pd.DataFrame:
     logger.info("Starting data cleaning process")
@@ -60,8 +60,10 @@ def data_cleaning(df: pd.DataFrame) -> pd.DataFrame:
         delivery_latitude=df["delivery_latitude"].abs(),
         delivery_longitude=df["delivery_longitude"].abs(),
         order_date=pd.to_datetime(df["order_date"], dayfirst=True, errors="coerce"),
+                
         order_time=pd.to_datetime(df["order_time"], errors="coerce"),
         order_picked_time=pd.to_datetime(df["order_picked_time"], errors="coerce"),
+                
         weather=(df["weather"].str.replace("conditions ", "")
                               .str.lower()
                               .replace("nan", np.nan)),
@@ -69,9 +71,9 @@ def data_cleaning(df: pd.DataFrame) -> pd.DataFrame:
         time_taken=df["time_taken"].str.replace("(min) ", "").astype(int),
     )
     df = clean_location(df, threshold=1.0)
-    df.drop(columns=["rider_id", "id"], inplace=True, errors="ignore")
     df = df.replace("NaN ", np.nan)
     df.dropna(inplace=True)
+
 
     logger.debug(f"Post-cleaning data shape: {df.shape}")
     logger.debug(f"Columns after cleaning: {df.columns.tolist()}")

@@ -1,25 +1,36 @@
 [project]
-name = "src"
+name = "fooddelivery"
 version = "0.1.0"
-description = "Food Delivery Data Cleaning Service"
+description = "Food delivery data ingestion & processing service"
+authors = [{ name = "Your Name", email = "you@example.com" }]
 readme = "README.md"
-requires-python = ">=3.11"
-authors = [
-    { name = "Ramesh Vhanamane", email = "your_email@example.com" }
-]
+requires-python = ">=3.9"
+
+# Runtime dependencies
 dependencies = [
     "pandas",
-    "pandera",
     "sqlalchemy",
-    "psycopg2-binary",
-    "pydantic-settings",
-    "loguru"
+    "pandera",
+    "loguru>=0.7.3",
+    "pydantic-settings>=2.2.1", # works with Pydantic v2
+    "psycopg2-binary>=2.9.10", # this is enough for PostgreSQL
+    "uvicorn>=0.35.0",
+    "fastapi>=0.116.1",
 ]
 
 [tool.uv]
+# Dev-only dependencies
 dev-dependencies = [
     "pytest",
-    "pytest-cov",
-    "ruff",        # linter
-    "mypy"         # type checker
+    "black",
+    "isort",
+    "mypy",
 ]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+# Tell uv/hatch to package the 'fooddelivery' folder
+[tool.hatch.build.targets.wheel]
+packages = ["fooddelivery"]

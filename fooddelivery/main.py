@@ -1,5 +1,6 @@
 import logging
 from loguru import logger
+
 from .db import DatabaseRepository
 from .processing import data_cleaning
 from .config import settings
