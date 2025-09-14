@@ -1,8 +1,5 @@
-pytest>=7.4
-pytest-mock
-pandera>=0.23
-pydantic-settings>=2.0
+pandas
+numpy
+SQLAlchemy
 loguru
-black
-ruff
-mypy
+psycopg-binary
